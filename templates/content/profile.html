@@ -70,14 +70,6 @@
             padding: 10px;
         }
 
-        .modal_image_upload{
-            outline: 2px dashed black ;
-            outline-offset:-10px;
-            text-align: center;
-            transition: all .15s ease-in-out;
-            width:780px;
-            height: 548px;
-        }
     </style>
 
 </head>
@@ -139,6 +131,13 @@
     </div>
 </div>
 
+<div style="border-top: solid 2px rgba(50,50,50,0.1); width: 100%">
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin: 20px">
+        <div id="button_feed_list" style="cursor: pointer;margin: 0 30px;display: flex; flex-direction: row;align-items: center"><span class="material-icons-outlined">grid_on</span>내 게시물</div>
+        <div id="button_feed_like_list" style="cursor: pointer;margin: 0 30px;display: flex; flex-direction: row;align-items: center"><span class="material-icons-outlined">favorite_border</span>좋아요</div>
+        <div id="button_feed_bookmark_list" style="cursor: pointer;margin: 0 30px;display: flex; flex-direction: row;align-items: center"><span class="material-icons-outlined">bookmark_border</span>북마크</div>
+    </div>
+</div>
 <!-- 첫번째 모달 -->
 <div id="first_modal" class="modal_overlay">
     <div class="modal_window">

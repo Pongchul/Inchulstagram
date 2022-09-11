@@ -14,7 +14,6 @@ class Join(APIView):
         return render(request, "user/join.html")
 
     def post(self, request):
-        # TODO 회원가입
         email = request.data.get('email', None)
         nickname = request.data.get('nickname', None)
         name = request.data.get('name', None)
@@ -34,7 +33,6 @@ class Login(APIView):
         return render(request, "user/login.html")
 
     def post(self, request):
-        # TODO 로그인
         email = request.data.get('email', None)
         password = request.data.get('password', None)
 
@@ -44,7 +42,6 @@ class Login(APIView):
             return Response(status=400, data=dict(message="회원정보가 잘못되었습니다."))
 
         if user.check_password(password):
-            # TODO 로그인을 했다. 세션 or 쿠키
             request.session['email'] = email
             return Response(status=200)
         else:
@@ -60,7 +57,6 @@ class LogOut(APIView):
 class UploadProfile(APIView):
     def post(self, request):
 
-        # 일단 파일 불러와
         file = request.FILES['file']
         email = request.data.get('email')
 
