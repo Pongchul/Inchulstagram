@@ -15,7 +15,7 @@ class Main(APIView):
         if email is None:
             return render(request, "user/login.html")
 
-        user = User.objects.filter(email=email).first()
+        user = User.objects.filter(email=email, id=id).first()
 
         if user is None:
             return render(request, "user/login.html")
@@ -33,7 +33,7 @@ class Main(APIView):
                                        nickname=user.nickname))
             like_count = Like.objects.filter(feed_id=feed.id, is_like=True).count()
             is_liked = Like.objects.filter(feed_id=feed.id, email=email, is_like=True).exists()
-            is_marked = Bookmark.objects.filter(feed_id=feed.id, email=email,is_marked=True).exists()
+            is_marked = Bookmark.objects.filter(feed_id=feed.id, email=email, is_marked=True).exists()
             feed_list.append(dict(id=feed.id,
                                   image=feed.image,
                                   content=feed.content,
@@ -67,6 +67,7 @@ class UploadFeed(APIView):
 
         Feed.objects.create(image=asdf, content=content123, email=email)
 
+
         return Response(status=200)
 
 
@@ -83,12 +84,15 @@ class Profile(APIView):
             return render(request, "user/login.html")
 
         feed_list = Feed.objects.filter(email=email)
+        feed_count = Feed.objects.filter(email=email).count()
         like_list = list(Like.objects.filter(email=email, is_like=True).values_list('feed_id', flat=True))      # flat = True ->를 해야 리스트로 나온다.
         like_feed_list = Feed.objects.filter(id__in=like_list)  # id__in --> feed_id_list를 포함하고있는 얘만 걸림!
         bookmark_list = list(Bookmark.objects.filter(email=email, is_marked=True).values_list('feed_id', flat=True))
         bookmark_feed_list = Feed.objects.filter(id__in=bookmark_list)
 
+
         return render(request, 'content/profile.html', context=dict(feed_list=feed_list,
+                                                                    feed_count=feed_count,
                                                                     like_feed_list=like_feed_list,
                                                                     bookmark_feed_list=bookmark_feed_list,
                                                                     user=user))
@@ -114,6 +118,7 @@ class ToggleLike(APIView):
             is_like = True
         else:
             is_like = False
+
         email = request.session.get('email', None)
 
         like = Like.objects.filter(feed_id=feed_id, email=email).first()
@@ -147,3 +152,4 @@ class ToggleBookmark(APIView):
             Bookmark.objects.create(feed_id=feed_id, is_marked=is_marked, email=email)
 
         return Response(status=200)
+
