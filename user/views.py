@@ -1,8 +1,10 @@
 import os
 from uuid import uuid4
 
+
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
+from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User
@@ -75,3 +77,4 @@ class UploadProfile(APIView):
         user.save()
 
         return Response(status=200)
+
